@@ -1,0 +1,58 @@
+insert into users(username,password,email)values('perf1','perf1','perf1@pt.com'),('perf2','perf2','perf2@pt.com');
+
+insert into user_roles(user_id,role_id)values(1,3),(2,3);
+
+alter table user_roles add foriegn key(user_id) references users(id);
+
+alter table user_roles drop primary key user_id;
+
+create table user_roles(user_id bigint, role_id int, constraint fk_category foreign key(user_id) references users(id), foreign key(role_id)references roles(id));
+
+create table user_roles(user_id bigint, role_id int, constraint fk_category foreign key(user_id) references users(id), foreign key(role_id)references roles(id));
+
+ALTER TABLE user_roles
+ADD FOREIGN KEY(user_id)
+REFERENCES users(id);
+
+
+insert into users(username,password,email)values('perf3','perf3','perf3@pt.com'),('perf4','perf4','perf4@pt.com');
+
+insert into user_roles(user_id,role_id)values(3,3),(4,3)(3,1),(4,1),(3,2),(4,2);
+
+ALTER TABLE refreshtoken
+ADD FOREIGN KEY(user_id)
+REFERENCES users(id);
+
+
+ALTER TABLE refreshtoken
+DROP FOREIGN KEY refreshtoken_ibfk_1;
+
+UPDATE `testdb_spring`.`users` SET `password` = 'perftest1' WHERE (`id` = '1');
+UPDATE `testdb_spring`.`users` SET `password` = 'perftest2' WHERE (`id` = '2');
+UPDATE `testdb_spring`.`users` SET `password` = 'perftest3' WHERE (`id` = '3');
+UPDATE `testdb_spring`.`users` SET `password` = 'perftest4' WHERE (`id` = '4');
+
+alter table refreshtoken MODIFY COLUMN expiry_date datetime DEFAULT NOW();
+
+
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.11.5</version>
+    <scope>runtime</scope>
+</dependency>
+
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.5</version>
+</dependency>
+
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.11.5</version>
+    <scope>runtime</scope>
+</dependency>
+
+curl -v -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxLHBlcmZhZG1pbkBhZ3JpLmNvbSIsImlzcyI6Ik5TWVJFRERZIiwicm9sZXMiOiJbUk9MRV9BRE1JTl0iLCJpYXQiOjE2OTQ0MzA4NDcsImV4cCI6MTY5NDUxNzI0N30.BhB8hQoJRiqvMngAn5HEpz5hNx6WwC91FMM8FQCIADaoFP4nSAzIZ_S7Llfnk-avncs_crNxfZmPV3hTJ_X5Cw' -d '{"name": "Narasimhareddy", "landin_acres": 10.2, "mobile": 9595987875, "address": "YSR", "defaultcrops": "Mirchi"}' 'localhost:8484/agri/farmers/'
